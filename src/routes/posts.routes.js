@@ -4,6 +4,9 @@ const Middleware = require('../middlewares');
 
 const router = express.Router();
 
+// endpoint para buscar pelo titulo ou content que vier no query
+router.get('/search', Middleware.authMiddleware, Controller.getPostsByQuery);
+
 // endpoint para cadastrar um novo post
 router.post(
   '/',

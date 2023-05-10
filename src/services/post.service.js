@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, User, Category } = require('../models');
 const { verifyCategoryIdsExistence } = require('../helpers/categories.helper');
 
@@ -59,6 +60,20 @@ const postService = {
   },
   // Deleta um post específico por id
   deletePostById: async (id) => BlogPost.destroy({ where: { id } }),
+  getPostsByQuery: async (query) => BlogPost.findAll({
+      where: {
+        [Op.or]: [{ title: { [Op.like]: `%${query}%` } }, { content: { [Op.like]: `%${query}%` } }],
+      },
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      }],
+    }),
 };
 
 module.exports = postService;

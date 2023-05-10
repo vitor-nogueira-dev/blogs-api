@@ -68,6 +68,16 @@ const postController = {
       return next(e);
     }
   },
+  getPostsByQuery: async (req, res, next) => {
+    try {
+      const { q } = req.query;
+      console.log(q, 'q');
+      const result = await postService.getPostsByQuery(q);
+      return res.status(200).json(result);
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = postController;
