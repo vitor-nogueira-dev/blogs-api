@@ -10,5 +10,7 @@ router.post('/', Middleware.validateUser, Controller.insertUser);
 router.get('/', Middleware.authMiddleware, Controller.findAllUsers);
 // endpoint para recuperar um usuário específico pelo id
 router.get('/:id', Middleware.authMiddleware, Controller.findUserById);
+// excluir o usuário do banco de dados baseado no id que tem no token
+router.delete('/me', Middleware.authMiddleware, Controller.deleteUser);
 
 module.exports = router;

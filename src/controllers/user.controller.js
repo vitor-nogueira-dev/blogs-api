@@ -42,6 +42,22 @@ const userController = {
       return next(e);
     }
   },
+  deleteUser: async (req, res, next) => {
+    try {
+      const { email } = req.user;
+      console.log(req.user, 'req.user');
+      const user = await userService.findUserByEmail(email);
+
+      if (!user) {
+        return next({ message: 'User does not exist', status: 404 });
+      }
+      await userService.deleteUser(user.id);
+
+      return res.status(204).end();
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = userController;

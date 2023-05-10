@@ -7,6 +7,7 @@ const userService = {
     User.findAll({ attributes: { exclude: ['password'] } }),
   findUserById: async (id) =>
     User.findOne({ where: { id }, attributes: { exclude: ['password'] } }),
+  deleteUser: async (id) => User.destroy({ where: { id } }),
 };
 
 module.exports = userService;
