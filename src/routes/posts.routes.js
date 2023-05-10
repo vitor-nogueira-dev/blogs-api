@@ -16,4 +16,7 @@ router.post(
 // endpoint para listar todos os posts
 router.get('/', Middleware.authMiddleware, Controller.getAllPostsOrPostById);
 
+// endpoint para listar um post específico por id
+router.get('/:id', Middleware.authMiddleware, Controller.getAllPostsOrPostById);
+
 module.exports = router;

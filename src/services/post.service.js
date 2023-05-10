@@ -47,6 +47,8 @@ const postService = {
 
     return blogPosts;
   },
+    // Busca um post específico por id
+  getPostById: async (id) => BlogPost.findOne({ where: { id } }),
 };
 
 module.exports = postService;
