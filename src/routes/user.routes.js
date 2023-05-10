@@ -8,5 +8,7 @@ const router = express.Router();
 router.post('/', Middleware.validateUser, Controller.insertUser);
 // endpoint para recuperar todos os usuários
 router.get('/', Middleware.authMiddleware, Controller.findAllUsers);
+// endpoint para recuperar um usuário específico pelo id
+router.get('/:id', Middleware.authMiddleware, Controller.findUserById);
 
 module.exports = router;

@@ -30,6 +30,18 @@ const userController = {
       return next(e);
     }
   },
+  findUserById: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const user = await userService.findUserById(id);
+      if (!user) {
+        return next({ message: 'User does not exist', status: 404 });
+      }
+      return res.status(200).json(user);
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = userController;
