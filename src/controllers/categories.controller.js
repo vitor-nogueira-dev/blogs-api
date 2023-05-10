@@ -12,6 +12,14 @@ const categoriesController = {
       return next(error);
     }
   },
+  findAllCategories: async (req, res, next) => {
+    try {
+      const categories = await categoriesService.findAllCategories();
+      return res.status(200).json(categories);
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = categoriesController;
