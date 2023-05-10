@@ -25,10 +25,12 @@ const postController = {
       const { id } = req.params;
       const result = await postService.getAllPostsOrPostById(id);
       console.log(result, 'result');
-      const message = Array.isArray(result) ? result[0].dataValues : { message: result };
+      const message = Array.isArray(result)
+        ? result[0].dataValues
+        : { message: result };
       const statusCode = Array.isArray(result) ? 200 : 404;
       return res.status(statusCode).json(message);
-    } catch (e) { 
+    } catch (e) {
       return next(e);
     }
   },
@@ -37,11 +39,31 @@ const postController = {
       const { id } = req.params;
       const { title, content } = req.body;
       const result = await postService.updatePost(id, {
-        title, content,
+        title,
+        content,
       });
-      const message = Array.isArray(result) ? result[0].dataValues : { message: result };
+      const message = Array.isArray(result)
+        ? result[0].dataValues
+        : { message: result };
       const statusCode = Array.isArray(result) ? 200 : 404;
       return res.status(statusCode).json(message);
+    } catch (e) {
+      return next(e);
+    }
+  },
+  deletePostById: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      // verificar se o id existe antes de deletar o post
+      const isIdValid = await postService.getPostById(id);
+      if (!isIdValid) {
+        return next({
+          message: 'Post does not exist',
+          status: 404,
+        });
+      }
+      await postService.deletePostById(id);
+      return res.status(204).end();
     } catch (e) {
       return next(e);
     }

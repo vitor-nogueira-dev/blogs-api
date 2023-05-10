@@ -57,6 +57,8 @@ const postService = {
 
     return postService.getAllPostsOrPostById(id);
   },
+  // Deleta um post específico por id
+  deletePostById: async (id) => BlogPost.destroy({ where: { id } }),
 };
 
 module.exports = postService;

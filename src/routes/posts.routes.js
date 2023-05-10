@@ -27,5 +27,12 @@ router.put(
   Middleware.validatePostOwner,
   Controller.updatePost,
 );
+// endpoint para deletar um post específico por id
+router.delete(
+'/:id',
+  Middleware.authMiddleware,
+  Middleware.validatePostOwner,
+  Controller.deletePostById,
+);
 
 module.exports = router;
