@@ -1,4 +1,6 @@
 const express = require('express');
+const loginRoutes = require('./routes/login.routes');
+const errorHandler = require('./middlewares/error.middleware');
 
 // ...
 
@@ -11,7 +13,10 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 
+app.use('/login', loginRoutes);
+
 // ...
+app.use(errorHandler);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
