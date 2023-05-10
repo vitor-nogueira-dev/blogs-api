@@ -24,9 +24,10 @@ const postController = {
     try {
       const { id } = req.params;
       const result = await postService.getAllPostsOrPostById(id);
-      console.log(result, 'result');
+
+      const value = id ? result[0].dataValues : result;
       const message = Array.isArray(result)
-        ? result[0].dataValues
+        ? value
         : { message: result };
       const statusCode = Array.isArray(result) ? 200 : 404;
       return res.status(statusCode).json(message);
