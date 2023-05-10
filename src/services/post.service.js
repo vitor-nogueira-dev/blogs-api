@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory } = require('../models');
+const { BlogPost, PostCategory, User, Category } = require('../models');
 const { verifyCategoryIdsExistence } = require('../helpers/categories.helper');
 
 const postService = {
@@ -23,6 +23,29 @@ const postService = {
     await PostCategory.bulkCreate(postCategories);
 
     return newPost;
+  },
+  // Busca todos os posts ou um post específico por id
+  getAllPostsOrPostById: async (id = null) => {
+    const whereCondition = id && { id };
+
+    const blogPosts = await BlogPost.findAll({
+      where: whereCondition,
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      }, {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      }],
+    });
+    console.log(blogPosts, 'blogPosts');
+    if (!blogPosts.length) {
+      return 'Post does not exist';
+    }
+
+    return blogPosts;
   },
 };
 

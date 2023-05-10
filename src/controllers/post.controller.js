@@ -20,6 +20,16 @@ const postController = {
       return res.status(500).json({ message: 'Erro interno' });
     }
   },
+  getAllPostsOrPostById: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const result = await postService.getAllPostsOrPostById(id);
+      const message = Array.isArray(result) ? result : { message: result };
+      return res.status(200).json(message);
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = postController;
