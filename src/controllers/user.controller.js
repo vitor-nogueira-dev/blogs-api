@@ -1,0 +1,27 @@
+const generateToken = require('../helpers/token.generate.helper');
+const userService = require('../services/user.service');
+
+const userController = {
+  insertUser: async (req, res, next) => {
+    try {
+      const newUser = req.body;
+
+      const findUser = await userService.findUserByEmail(newUser.email);
+
+      if (findUser) {
+        return next({ message: 'User already registered', status: 409 });
+      }
+
+      const user = await userService.insertUser(newUser);
+      const removePassword = { ...user, password: undefined };
+      console.log(removePassword, 'removePassword');
+      const token = generateToken(removePassword);
+
+      res.status(201).json({ token });
+    } catch (error) {
+      return next(error);
+    }
+  },
+};
+
+module.exports = userController;
