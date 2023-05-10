@@ -49,6 +49,14 @@ const postService = {
   },
     // Busca um post específico por id
   getPostById: async (id) => BlogPost.findOne({ where: { id } }),
+  updatePost: async (id, post) => {
+    const { title, content } = post;
+    await BlogPost.update({
+      title, content,
+    }, { where: { id } });
+
+    return postService.getAllPostsOrPostById(id);
+  },
 };
 
 module.exports = postService;

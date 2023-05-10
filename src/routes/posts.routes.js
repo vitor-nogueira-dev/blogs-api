@@ -19,4 +19,13 @@ router.get('/', Middleware.authMiddleware, Controller.getAllPostsOrPostById);
 // endpoint para listar um post específico por id
 router.get('/:id', Middleware.authMiddleware, Controller.getAllPostsOrPostById);
 
+// endpoint para editar um post específico por id
+router.put(
+'/:id',
+  Middleware.authMiddleware,
+  Middleware.validateFieldsPost,
+  Middleware.validatePostOwner,
+  Controller.updatePost,
+);
+
 module.exports = router;

@@ -32,6 +32,20 @@ const postController = {
       return next(e);
     }
   },
+  updatePost: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { title, content } = req.body;
+      const result = await postService.updatePost(id, {
+        title, content,
+      });
+      const message = Array.isArray(result) ? result[0].dataValues : { message: result };
+      const statusCode = Array.isArray(result) ? 200 : 404;
+      return res.status(statusCode).json(message);
+    } catch (e) {
+      return next(e);
+    }
+  },
 };
 
 module.exports = postController;
