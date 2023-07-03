@@ -42,7 +42,7 @@ Rode os serviços `node` e `db` com o comando `docker-compose up -d --build`
 
 * Ele te dará acesso ao terminal interativo do container criado pelo compose, que está rodando em segundo plano.
 
-* Instale as dependências [Caso existam] com `npm install` dentro do container store_manager
+* Instale as dependências [Caso existam] com `npm install` dentro do container `blogs_api`
 
 ⚠️ Atenção: Caso opte por utilizar o Docker, TODOS os comandos disponíveis no `package.json` (`npm start, npm test, npm run dev`, ...) devem ser executados DENTRO do container, ou seja, no terminal que aparece após a execução do comando `docker exec` citado acima.
 
